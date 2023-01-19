@@ -37,6 +37,7 @@ function installOneshot() {
 function installMidiFix() {
 	if [[ $OS == 'arch' ]]; then
 		# Install required dependencies and upgrade the system
+		# https://github.com/frescobaldi/frescobaldi/wiki/MIDI-playback-on-Linux
 		sudo pacman --needed --noconfirm -Syu portmidi fluidsynth soundfont-fluid
 		sudo dd if=/dev/null of=/etc/conf.d/fluidsynth
 		echo "# Mandatory parameters (uncomment and edit)
@@ -51,6 +52,26 @@ sudo tee -a /etc/conf.d/fluidsynth
 		if (pacman -Qs frescobaldi >/dev/null) ; then 
 			sudo pacman --needed --noconfirm -Syu frescobaldi
 		fi
+	fi
+}
+
+function installTools() {
+	if [[ $OS == 'arch' ]]; then
+		# Install required dependencies and upgrade the system
+		sudo pacman --needed --noconfirm -Syu bitwarden nano  gedit signal-desktop
+		sudo pacman --needed --noconfirm -Syu kodi kodi-addon-pvr-iptvsimple
+	fi
+}
+
+function installFixBluetooth() {
+	if [[ $OS == 'arch' ]]; then
+		# Install required dependencies and upgrade the system
+		# https://hazlolinux.com/bluetooth/como-configurar-bluetooth-en-arch-linux/
+		# sudo nano /etc/bluetooth/main.conf; sudo rfkill list; 
+		sudo pacman --needed --noconfirm -Syu bluez bluez-utils blueman
+		sudo rfkill unblock bluetooth
+		sudo systemctl start bluetooth.service
+		sudo systemctl enable bluetooth.service
 	fi
 }
 
