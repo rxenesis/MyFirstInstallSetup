@@ -1,0 +1,16 @@
+source config.sh
+
+function installFixBluetooth() {
+	if [[ $OS == 'arch' ]]; then
+		# Install required dependencies and upgrade the system
+		# https://hazlolinux.com/bluetooth/como-configurar-bluetooth-en-arch-linux/
+		# sudo nano /etc/bluetooth/main.conf; sudo rfkill list; 
+		sudo pacman --needed --noconfirm -Syu bluez bluez-utils blueman
+		sudo rfkill unblock bluetooth
+		sudo systemctl start bluetooth.service
+		sudo systemctl enable bluetooth.service
+	fi
+}
+
+checkOS
+installFixBluetooth
