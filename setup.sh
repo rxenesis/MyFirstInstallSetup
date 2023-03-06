@@ -23,16 +23,6 @@ function initialCheck() {
 	checkOS
 }
 
-function installOneshot() {
-	if [[ $OS == 'arch' ]]; then
-		# Install required dependencies and upgrade the system
-		sudo pacman --needed --noconfirm -Syu wpa_supplicant pixiewps wget python
-		find /home/ -maxdepth 2 -name "oneshot.py" -delete
-		find /home/ -maxdepth 2 -name "vulnwsc.txt" -delete
-		wget https://raw.githubusercontent.com/drygdryg/OneShot/master/oneshot.py
-		wget https://raw.githubusercontent.com/drygdryg/OneShot/master/vulnwsc.txt
-	fi
-}
 
 function installMidiFix() {
 	if [[ $OS == 'arch' ]]; then
@@ -44,7 +34,7 @@ function installMidiFix() {
 SOUND_FONT=/usr/share/soundfonts/FluidR3_GM.sf2
 
 # Additional optional parameters (may be useful, see 'man fluidsynth' for further info)
-OTHER_OPTS='-a alsa -m alsa_seq -i -l -s -p FluidSynth FluidSynth -R 0 -C 0 -c 2 -z 512 -r 48000 -g 4'" | 
+OTHER_OPTS='-a alsa -m alsa_seq -i -l -s -p FluidSynth -R 0 -C 0 -c 2 -z 512 -r 48000 -g 4'" | 
 sudo tee -a /etc/conf.d/fluidsynth
 		systemctl --user daemon-reload
 		systemctl --user start fluidsynth.service
